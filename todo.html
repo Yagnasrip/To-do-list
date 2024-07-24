@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yagna's To-Do List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            position: relative;
+            border-left: 5px solid #ff6b6b; /* Ruled line effect */
+        }
+
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 2px solid #ff6b6b;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff3b3b;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff3b3b;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #ffe4e1;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s;
+        }
+
+        li.completed {
+            background-color: #d3d3d3;
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .delete-btn {
+            background-color: #ff3b3b;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff1a1a;
+        }
+
+        .pencil-image {
+            position: absolute;
+            left: -70px; /* Position pencil on the left */
+            top: 20px;
+            width: 100px;
+            opacity: 0.7;
+        }
+
+        .checkbox {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://img.icons8.com/ios-filled/100/ff6b6b/pencil.png" alt="Pencil" class="pencil-image">
+        <h1>Cute To-Do List</h1>
+        <input type="text" id="task-input" placeholder="Add a new task...">
+        <button id="add-task">Add Task</button>
+        <ul id="task-list"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('task-input');
+        const addTaskButton = document.getElementById('add-task');
+        const taskList = document.getElementById('task-list');
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                const taskItem = document.createElement('li');
+                const checkbox = document.createElement('input');
+                const taskLabel = document.createElement('span');
+                const deleteButton = document.createElement('button');
+
+                checkbox.type = 'checkbox';
+                checkbox.className = 'checkbox';
+                taskLabel.textContent = taskText;
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete-btn';
+
+                taskItem.appendChild(checkbox);
+                taskItem.appendChild(taskLabel);
+                taskItem.appendChild(deleteButton);
+                taskList.appendChild(taskItem);
+
+                deleteButton.addEventListener('click', () => {
+                    taskItem.remove();
+                });
+
+                checkbox.addEventListener('change', () => {
+                    taskItem.classList.toggle('completed', checkbox.checked);
+                });
+
+                taskInput.value = '';
+            }
+        }
+
+        addTaskButton.addEventListener('click', addTask);
+        taskInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
